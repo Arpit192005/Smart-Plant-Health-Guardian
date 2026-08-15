@@ -1,0 +1,49 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <DHT.h>
+
+#define SOIL 34
+#define DHTPIN 27
+#define RELAY 19
+#define GREEN 5
+#define RED 17
+
+DHT dht(DHTPIN, DHT22);
+Adafruit_SSD1306 oled(128,64,&Wire,-1);
+
+void setup() {
+  pinMode(RELAY,OUTPUT);
+  pinMode(GREEN,OUTPUT);
+  pinMode(RED,OUTPUT);
+  dht.begin();
+  Wire.begin(21,22);
+  oled.begin(SSD1306_SWITCHCAPVCC,0x3C);
+}
+
+void loop() {
+  int soil = analogRead(SOIL);
+  int moisture = map(soil,4095,1500,0,100);
+  moisture = constrain(moisture,0,100);
+
+  float hum = dht.readHumidity();
+  float temp = dht.readTemperature();
+
+  bool water = (moisture < 30) || (moisture < 40 && hum < 70);
+
+  digitalWrite(RELAY,water);
+  digitalWrite(RED,water);
+  digitalWrite(GREEN,!water);
+
+  oled.clearDisplay();
+  oled.setTextColor(WHITE);
+  oled.setTextSize(1);
+  oled.setCursor(0,0);
+  oled.printf("Soil: %d%%\nTemp: %.1f C\nHumidity: %.1f%%\n",
+              moisture,temp,hum);
+  oled.setCursor(0,50);
+  oled.print(water ? "NEED WATER" : "PLANT HEALTHY");
+  oled.display();
+
+  delay(2000);
+}
