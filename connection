@@ -1,0 +1,33 @@
+| Component                           | Component Pin | ESP32 Pin / Connection                |
+| ----------------------------------- | ------------- | ------------------------------------- |
+| **Capacitive Soil Moisture Sensor** | VCC           | 3.3V                                  |
+|                                     | GND           | GND                                   |
+|                                     | AOUT          | **GPIO 34**                           |
+| **DHT22**                           | VCC           | 3.3V                                  |
+|                                     | GND           | GND                                   |
+|                                     | DATA          | **GPIO 27**                           |
+| **0.96" OLED (I²C)**                | VCC           | 3.3V                                  |
+|                                     | GND           | GND                                   |
+|                                     | SDA           | **GPIO 21**                           |
+|                                     | SCL           | **GPIO 22**                           |
+| **Relay Module**                    | VCC           | 5V                                    |
+|                                     | GND           | GND                                   |
+|                                     | IN            | **GPIO 19**                           |
+| **Green LED**                       | Anode (+)     | **GPIO 5** through 220Ω resistor      |
+|                                     | Cathode (−)   | GND                                   |
+| **Red LED**                         | Anode (+)     | **GPIO 17** through 220Ω resistor     |
+|                                     | Cathode (−)   | GND                                   |
+| **Water Pump**                      | +             | External **5V supply → Relay COM/NO** |
+|                                     | −             | External supply GND                   |
+| **Buzzer** *(if used)*              | +             | **GPIO 18** through 220Ω resistor     |
+|                                     | −             | GND                                   |
+
+
+| Device               | Power                  |
+| -------------------- | ---------------------- |
+| ESP32                | USB 5V                 |
+| Soil moisture sensor | 3.3V                   |
+| DHT22                | 3.3V                   |
+| OLED                 | 3.3V                   |
+| Relay                | 5V                     |
+| Water pump           | **Separate 5V supply** |
